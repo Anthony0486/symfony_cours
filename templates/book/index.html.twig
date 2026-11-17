@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+ <title>{% block title %}Books{% endblock %}</title>
+{% block body %}
+<h1>Liste des Livres :</h1>
+{% for book in books %}
+<ul>
+    <li>{{ book.title }}</li>
+    <li>{{ book.author }}</li>
+    <a href="{{ path('app_books_show', {id: book.id}) }}">
+    Voir le détail
+</a>
+    </ul>
+{% else %}
+    <p>Aucun livre disponible.</p>
+    {% endfor %}
+{% endblock body %}
