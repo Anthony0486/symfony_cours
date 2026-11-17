@@ -5,10 +5,11 @@ Liste des Utilisateurs
 {% block body %}
 <ul>
     {% if users %}
-    <p>Liste des Utilisateurs </p>
+    <h1>Liste des Utilisateurs </h1>
             {% for user in users %}
-        <li>{{ user.firstname }} - {{ user.lastname }} / {{ user.email }}</li>
-        <a href="{{ path('app_users_id', {id: user.id }) }}">Détail</a>
+        <li><a href="{{ path('app_user_id', {id: user.id }) }}"> {{ user.firstname }} {{ user.lastname }}</a></li>
+        <P> {{ user.email }} </P>
+        <hr>
         {% endfor %}
     {% else %}
     <p>La liste est vide</p>

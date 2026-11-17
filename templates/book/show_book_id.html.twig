@@ -1,0 +1,17 @@
+{% extends "base.html.twig" %}
+{% block title %} 
+Liste des livres
+{% endblock %}
+{% block body %}
+ {% if book %}
+<h1>Détails du livre</h1>
+<h2>{{ book.title }}</h2>
+<p>{{ book.author }}</p>
+<p>{{ book.resume }}</p>
+<p>{{ book.publishAt|date("d/m/Y") }}</p>
+<a href="{{ path('app_books') }}">Retour à la liste</a>
+   {% else %}
+    <h1>Le livre n'existe pas</h1>
+    <a href="{{ path('app_books') }}">Retour à la liste</a>
+{% endif %}
+{% endblock %}  

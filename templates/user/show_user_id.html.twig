@@ -3,6 +3,11 @@
 Liste des Utilisateurs
 {% endblock %}
 {% block body %}
+ {% if user %}
 <h1>Détails de l'utilisateur</h1>
 <a href="{{ path('app_users') }}">Retour à la liste</a>
+   {% else %}
+    <h1>L'utilateur n'existe pas</h1>
+    <a href="{{ path('app_users') }}">Retour à la liste</a>
+{% endif %}
 {% endblock %}  
