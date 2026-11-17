@@ -8,7 +8,7 @@ use App\Entity\Category;
 use App\Entity\User;
 use App\Entity\Book;
 use Faker;
-use Faker\Factory;
+
 class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
@@ -20,7 +20,7 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 20; $i++) {
             //creer objet
             $category = new Category();
-            $category->setName($faker->word());
+            $category->setName($faker->unique()->word());
             $categories[] = $category;
             //persister objet
             $manager->persist($category);
@@ -31,10 +31,10 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 10; $i++) {
             //creer objet
             $user = new User();
-            $user->setEmail($faker->email());
-            $user->setPassword($faker->password());
-            $user->setFirstname($faker->firstName());
-            $user->setLastname($faker->lastName());
+            $user->setEmail($faker->unique()->email())
+                ->setPassword(password_hash($faker->word(), PASSWORD_DEFAULT))
+                ->setFirstname($faker->firstName())
+                ->setLastname($faker->lastName());
             $users[] = $user;
             //persister objet
             $manager->persist($user);
@@ -43,12 +43,12 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 60; $i++) {
             //creer objet
             $book = new Book();
-            $book->setTitle($faker->realText(10));
-            $book->setAuthor($faker->name());
-            $book->setPublishAt($faker->dateTime());
-            $book->setResume($faker->realtext(200));
-            $book->addCategory($faker->randomElement($categories));
-            $book->setUser($faker->randomElement($users));
+            $book->setTitle($faker->unique()->realText(10))
+                ->setAuthor($faker->name())
+                ->setPublishAt($faker->dateTime())
+                ->setResume($faker->realtext(200))
+                ->addCategory($faker->randomElement($categories))
+                ->setUser($faker->randomElement($users));
             //persister objet
             $manager->persist($book);
         }
