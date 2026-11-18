@@ -27,5 +27,13 @@
             Accéder à la liste des livres &rarr;
         </a>
     </div>
+             {% for formation in formations %}
+             
+      <twig:FormationCard
+      :title="formation.title"
+      :description="formation.description"
+      />
+    {% endfor %}
+
 </div>
 {% endblock %}
