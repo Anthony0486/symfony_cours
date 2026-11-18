@@ -3,11 +3,14 @@
 {% block title %}Accueil - Bibliothèque{% endblock %}
 
 {% block body %}
-<twig:Alert message="Bienvenue sur le site !" />
-<twig:Alert message="Enregistrement réussi." type="success" />
-<twig:Alert message="Une erreur est survenue." type="danger" />
-<div class="min-h-[80vh] flex items-center justify-center px-4">
-    <div class="max-w-xl w-full bg-white text-slate-800 rounded-2xl shadow-xl p-10 text-center">
+<div class="px-4 py-8">
+    <div class="mb-6">
+        <twig:Alert message="Bienvenue sur le site !" />
+        <twig:Alert message="Enregistrement réussi." type="success" />
+        <twig:Alert message="Une erreur est survenue." type="danger" />
+    </div>
+
+    <div class="max-w-xl mx-auto w-full bg-white text-slate-800 rounded-2xl shadow-xl p-10 text-center">
         <div class="w-24 h-24 mx-auto mb-6 bg-sky-50 rounded-full flex items-center justify-center">
             <img class="w-14 h-14 object-contain" src="{{ asset('images/book.svg') }}" alt="Logo Bibliothèque">
         </div>

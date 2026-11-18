@@ -1,13 +1,70 @@
 {% extends "base.html.twig" %}
-{% block title %} 
-Liste des Utilisateurs
+
+{% block title %}
+    {{ user ? user.firstname ~ ' ' ~ user.lastname : 'Utilisateur introuvable' }}
 {% endblock %}
+
 {% block body %}
- {% if user %}
-<h1>Détails de l'utilisateur</h1>
-<a href="{{ path('app_users') }}">Retour à la liste</a>
-   {% else %}
-    <h1>L'utilateur n'existe pas</h1>
-    <a href="{{ path('app_users') }}">Retour à la liste</a>
-{% endif %}
-{% endblock %}  
+<div class="max-w-3xl mx-auto px-4 py-10">
+    {# Bouton retour #}
+    <div class="mb-6">
+        <a href="{{ path('app_users') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-white/90 text-sky-900 font-semibold rounded-lg shadow hover:bg-white transition">
+            <span>&larr;</span> Retour aux utilisateurs
+        </a>
+    </div>
+
+    {% if user %}
+        <div class="bg-white text-slate-800 rounded-2xl shadow-xl overflow-hidden p-8 sm:p-10">
+            <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+                <span class="px-3 py-1 bg-sky-100 text-sky-800 text-xs font-semibold uppercase tracking-wide rounded-full">
+                    Profil utilisateur
+                </span>
+                <span class="text-sm font-semibold text-slate-400">
+                    #{{ user.id }}
+                </span>
+            </div>
+
+            {# En-tête profil avec avatar initiales #}
+            <div class="flex items-center gap-5 mb-8">
+                <div class="w-16 h-16 rounded-full bg-sky-100 text-sky-700 font-bold text-2xl flex items-center justify-center shrink-0">
+                    {{ user.firstname|first|upper }}{{ user.lastname|first|upper }}
+                </div>
+                <div>
+                    <h1 class="text-3xl font-bold text-slate-900">
+                        {{ user.firstname }} {{ user.lastname }}
+                    </h1>
+                    <p class="text-slate-500">{{ user.email }}</p>
+                </div>
+            </div>
+
+            {# Informations détaillées #}
+            <div class="pt-6 border-t border-slate-200 grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                    <span class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Prénom</span>
+                    <span class="font-semibold text-slate-800">{{ user.firstname ?? 'Non renseigné' }}</span>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                    <span class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Nom</span>
+                    <span class="font-semibold text-slate-800">{{ user.lastname ?? 'Non renseigné' }}</span>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                    <span class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Adresse e-mail</span>
+                    <span class="font-semibold text-slate-800">{{ user.email }}</span>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                    <span class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Identifiant</span>
+                    <span class="font-semibold text-slate-800">#{{ user.id }}</span>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="bg-white text-slate-800 rounded-2xl shadow-xl p-10 text-center">
+            <h1 class="text-2xl font-bold text-red-600 mb-2">Utilisateur introuvable</h1>
+            <p class="text-slate-500 mb-6">L'utilisateur que vous recherchez n'existe pas.</p>
+            <a href="{{ path('app_users') }}" class="inline-block px-5 py-2.5 bg-sky-600 text-white font-semibold rounded-lg shadow hover:bg-sky-700 transition">
+                Retour aux utilisateurs
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
