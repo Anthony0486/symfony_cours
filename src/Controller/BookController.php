@@ -14,16 +14,14 @@ class BookController extends AbstractController
         ) {}
     #[Route(path:"/livres", name:"app_books")]
     public function showAllBooks(): Response{
-        $books = $this->bookService->getBooks();
         return $this->render("book/show_all_books.html.twig", [
-            "books"=> $books
+            "books"=> $this->bookService->getBooks()
         ]);
     }
     #[Route(path:"/livres/{id}", name:"app_book_id")]
-    public function showBookById(int $id): Response{
-        $book = $this->bookService->getBookById($id);
+    public function showBookById(int $id): Response{ 
         return $this->render("book/show_book_id.html.twig", [
-            "book"=> $book
+            "book"=> $this->bookService->getBookById($id)
         ]);
     }
 }

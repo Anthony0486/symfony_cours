@@ -7,7 +7,7 @@ use App\Repository\BookRepository;
 
 class BookService {
     public function __construct(
-        private BookRepository $bookRepository)
+        private readOnly BookRepository $bookRepository)
         {}
     public function getBooks(): array {
         return $this->bookRepository->findAll() ?? [];
@@ -15,5 +15,9 @@ class BookService {
     public function getBookById(int $id): ?Book 
     {
         return $this->bookRepository->find($id);
+    }
+    public function getBookByName(string $name): ?Book
+    {
+        return $this->bookRepository->findOneBy(["name"=> $name]);
     }
 }

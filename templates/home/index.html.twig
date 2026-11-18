@@ -1,8 +1,25 @@
 {% extends 'base.html.twig' %}
-{% block title %}Home{% endblock %}
+
+{% block title %}Accueil - Bibliothèque{% endblock %}
+
 {% block body %}
+<div class="min-h-[80vh] flex items-center justify-center px-4">
+    <div class="max-w-xl w-full bg-white text-slate-800 rounded-2xl shadow-xl p-10 text-center">
+        <div class="w-24 h-24 mx-auto mb-6 bg-sky-50 rounded-full flex items-center justify-center">
+            <img class="w-14 h-14 object-contain" src="{{ asset('images/book.svg') }}" alt="Logo Bibliothèque">
+        </div>
 
-<h1>Ceci est un Titre</h1>
-<p>Ceci est un paragraphe</p>
+        <h1 class="text-3xl font-bold text-slate-900 mb-3">
+            Bienvenue sur la Bibliothèque
+        </h1>
 
+        <p class="text-slate-500 mb-8 leading-relaxed">
+            Explorez notre collection d'ouvrages, consultez leurs résumés, leurs catégories et leurs propriétaires.
+        </p>
+
+        <a href="{{ path('app_books') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-sky-600 text-white font-semibold rounded-xl shadow-md hover:bg-sky-700 transition">
+            Accéder à la liste des livres &rarr;
+        </a>
+    </div>
+</div>
 {% endblock %}

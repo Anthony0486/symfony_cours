@@ -1,16 +1,77 @@
 {% extends 'base.html.twig' %}
-{% block title %}Books{% endblock %}
+
+{% block title %}Liste des livres{% endblock %}
+
 {% block body %}
-<h1>Liste des Livres :</h1>
-{% for book in books %}
-<ul>
-    <li>{{ book.title }}</li>
-    <li>{{ book.author }}</li>
-    <a href="{{ path('app_book_id', {id: book.id}) }}">
-    Voir le détail
-</a>
-    </ul>
-{% else %}
-    <p>Aucun livre disponible.</p>
-    {% endfor %}
-{% endblock body %}
+<div class="max-w-7xl mx-auto px-4 py-10">
+    {# Bouton retour à l'accueil #}
+    <div class="mb-6">
+        <a href="{{ path('app_home') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-white/90 text-sky-900 font-semibold rounded-lg shadow hover:bg-white transition">
+            <span>&larr;</span> Retour à l'accueil
+        </a>
+    </div>
+
+    {# En-tête de la page #}
+    <div class="flex flex-wrap items-center justify-between gap-4 mb-8">
+        <div>
+            <h1 class="text-3xl font-bold text-slate-900">Liste des livres</h1>
+            <p class="text-slate-500 mt-1">Découvrez l'ensemble des ouvrages disponibles dans la bibliothèque</p>
+        </div>
+        <span class="px-4 py-1.5 bg-sky-100 text-sky-800 text-sm font-semibold rounded-full shadow-xs">
+            {{ books|length }} livre{{ books|length > 1 ? 's' : '' }}
+        </span>
+    </div>
+
+    {# Grille de 4 colonnes sur grand écran #}
+    <section class="library grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {% for book in books %}
+            <article class="bg-white text-slate-800 rounded-2xl shadow-md hover:shadow-xl transition duration-200 overflow-hidden flex flex-col">
+                {# Illustration #}
+                <div class="bg-slate-100 p-6 flex items-center justify-center">
+                    <img class="w-28 h-28 object-contain drop-shadow-sm" src="{{ asset('images/book.svg') }}" alt="{{ book.title }}">
+                </div>
+
+                {# Contenu de la carte #}
+                <div class="p-6 flex flex-col flex-1">
+                    {# Badges catégories #}
+                    {% if book.categories is not empty %}
+                        <div class="flex flex-wrap gap-1.5 mb-3">
+                            {% for category in book.categories %}
+                                <span class="px-2.5 py-0.5 bg-sky-100 text-sky-800 text-xs font-semibold uppercase tracking-wide rounded-full">
+                                    {{ category.name }}
+                                </span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    {# Titre & Auteur #}
+                    <h2 class="font-bold text-xl text-slate-900 mb-1 line-clamp-1" title="{{ book.title }}">
+                        {{ book.title }}
+                    </h2>
+                    <p class="text-sm text-slate-500 italic mb-4">
+                        Par <span class="font-medium text-slate-700">{{ book.author ?? 'Auteur inconnu' }}</span>
+                    </p>
+
+                    {# Aperçu du résumé #}
+                    {% if book.resume %}
+                        <p class="text-sm text-slate-600 line-clamp-2 mb-6">
+                            {{ book.resume }}
+                        </p>
+                    {% endif %}
+
+                    {# Bouton aligné en bas de la carte grâce à mt-auto #}
+                    <div class="mt-auto pt-4 border-t border-slate-100">
+                        <a href="{{ path('app_book_id', {id: book.id}) }}" class="block w-full text-center px-4 py-2.5 bg-sky-600 text-white text-sm font-semibold rounded-xl shadow-xs hover:bg-sky-700 transition">
+                            Voir le détail &rarr;
+                        </a>
+                    </div>
+                </div>
+            </article>
+        {% else %}
+            <div class="col-span-full bg-white text-slate-800 rounded-2xl shadow-md p-10 text-center">
+                <p class="text-lg font-medium text-slate-600">Aucun livre disponible pour le moment.</p>
+            </div>
+        {% endfor %}
+    </section>
+</div>
+{% endblock %}
