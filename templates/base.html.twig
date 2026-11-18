@@ -19,7 +19,9 @@
         {% endif %}
     </head>
     <body>
-        {% include "/components/header.html.twig" %}
+        <twig:Navbar/>
+        
         {% block body %}{% endblock %}
+        <twig:Footer/>
     </body>
 </html>
