@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+{% if bookByTitle %}
+        <h1>{{ bookByTitle.title }}</h1>
+        <p>{{ bookByTitle.author }}</p>
+        <p>{{ bookByTitle.publishAt|date('d/m/Y') }}</p>
+    {% else %}
+        <h1>Aucun livre à afficher</h1>
+{% endif %}
+{% endblock %}
