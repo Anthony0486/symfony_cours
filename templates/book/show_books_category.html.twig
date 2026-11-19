@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {% for book in booksByCategory %}
+        <h1>{{ book.title }}</h1>
+        <p>{{ book.author }}</p>
+        <p>{{ book.publishAt|date('d/m/Y') }}</p>
+        {% for cat in book.categories %} 
+        <p> {{ cat.name }}</p>
+        {% endfor %}
+    {% else %}
+        <h1>Aucun livre à afficher</h1>
+    {% endfor %}
+{% endblock %}

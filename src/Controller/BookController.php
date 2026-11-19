@@ -24,6 +24,12 @@ class BookController extends AbstractController
             "recentBooks"=> $this->bookService->getRecentBooks($date)
         ]);
 }
+        #[Route(path:"/livres/category/{category}", name:"app_book_category")]
+    public function showBooksByCategory(string $category): Response{
+        return $this->render("book/show_books_category.html.twig", [
+            "booksByCategory"=> $this->bookService->getBooksByCategory($category)
+        ]);
+}
     #[Route(path:"/livres/{id}", name:"app_book_id")]
     public function showBookById(int $id): Response{ 
         return $this->render("book/show_book_id.html.twig", [

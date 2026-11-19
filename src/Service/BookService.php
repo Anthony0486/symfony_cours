@@ -25,4 +25,8 @@ class BookService {
     {
         return $this->bookRepository->findPublishedAfter($date);
     }
+    public function getBooksByCategory(string $category): array
+    {
+        return $this->bookRepository->findByCategory($category);
+    }
 }

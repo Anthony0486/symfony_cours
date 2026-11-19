@@ -16,7 +16,7 @@ class BookRepository extends ServiceEntityRepository
         parent::__construct($registry, Book::class);
     }
 
-//    /**
+    //    /**
 //     * @return Book[] Returns an array of Book objects
 //     */
 //    public function findByExampleField($value): array
@@ -31,7 +31,7 @@ class BookRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Book
+    //    public function findOneBySomeField($value): ?Book
 //    {
 //        return $this->createQueryBuilder('b')
 //            ->andWhere('b.exampleField = :val')
@@ -40,17 +40,29 @@ class BookRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
-   public function findPublishedAfter(\DateTimeInterface $date): array
-   {
-       return $this->createQueryBuilder('b')
-            ->select(        
-                'b.title, b.author, b.publishAt')
+    public function findPublishedAfter(\DateTimeInterface $date): array
+    {
+        return $this->createQueryBuilder('b')
+            ->select(
+                'b.title, b.author, b.publishAt'
+            )
             ->andWhere('b.publishAt >= :publishAt')
             ->setParameter('publishAt', $date)
-           ->orderBy('b.publishAt', 'DESC')
-           ->setMaxResults(10)
-           ->getQuery()
-           ->getResult()
-       ;
-   }
+            ->orderBy('b.publishAt', 'DESC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    public function findByCategory(string $categoryName): array
+    {
+        return $this->createQueryBuilder('b')
+            ->innerJoin('b.categories', 'c')
+            ->andWhere('c.name = :name')
+            ->setParameter('name', $categoryName)
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }
