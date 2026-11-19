@@ -19,5 +19,11 @@ class UserService
     {
         return $this->userRepository->find($id);
     }
+    public function findOneUserListDtoById(int $id){
+        return $this->userRepository->findOneUserListDtoById($id);
+    }
+    public function findAllUserListDtoById(){
+        return $this->userRepository->findAllUserListDto();
+    }
 
 }

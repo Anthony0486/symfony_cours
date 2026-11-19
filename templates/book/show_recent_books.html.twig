@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {% for book in recentBooks %}
+        <h1>{{ book.title }}</h1>
+        <p>{{ book.author }}</p>
+        <p>{{ book.publishAt|date('d/m/Y') }}</p>
+    {% else %}
+        <h1>Aucun livre à afficher</h1>
+    {% endfor %}
+{% endblock %}

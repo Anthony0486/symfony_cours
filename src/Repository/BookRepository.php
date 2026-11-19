@@ -40,4 +40,17 @@ class BookRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+   public function findPublishedAfter(\DateTimeInterface $date): array
+   {
+       return $this->createQueryBuilder('b')
+            ->select(        
+                'b.title, b.author, b.publishAt')
+            ->andWhere('b.publishAt >= :publishAt')
+            ->setParameter('publishAt', $date)
+           ->orderBy('b.publishAt', 'DESC')
+           ->setMaxResults(10)
+           ->getQuery()
+           ->getResult()
+       ;
+   }
 }

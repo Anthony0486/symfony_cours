@@ -20,4 +20,9 @@ class BookService {
     {
         return $this->bookRepository->findOneBy(["name"=> $name]);
     }
+
+    public function getRecentBooks(\DateTimeInterface $date): array
+    {
+        return $this->bookRepository->findPublishedAfter($date);
+    }
 }
