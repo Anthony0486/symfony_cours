@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription - Bibliothèque{% endblock %}
+
+{% block body %}
+<div class="max-w-xl mx-auto px-4 py-10">
+    {# Bouton retour à l'accueil #}
+    <div class="mb-6">
+        <a href="{{ path('app_home') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-white/90 text-sky-900 font-semibold rounded-lg shadow hover:bg-white transition">
+            <span>&larr;</span> Retour à l'accueil
+        </a>
+    </div>
+
+    <div class="bg-white text-slate-800 rounded-2xl shadow-xl p-8 sm:p-10">
+        {# En-tête de la carte #}
+        <div class="text-center mb-8">
+            <div class="w-16 h-16 mx-auto mb-4 bg-sky-50 rounded-full flex items-center justify-center">
+                <img class="w-9 h-9 object-contain" src="{{ asset('images/book.svg') }}" alt="Logo EasyBook">
+            </div>
+            <h1 class="text-3xl font-bold text-slate-900 mb-2">Créer un compte</h1>
+            <p class="text-slate-500 text-sm">Rejoignez la bibliothèque EasyBook en quelques secondes</p>
+        </div>
+
+        {# Erreurs globales du formulaire #}
+        {% if form_errors(registrationForm) %}
+            <div class="mb-6 p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm">
+                {{ form_errors(registrationForm) }}
+            </div>
+        {% endif %}
+
+        {{ form_start(registrationForm, {'attr': {'class': 'space-y-5'}}) }}
+            {# Prénom et Nom sur 2 colonnes #}
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    {{ form_label(registrationForm.firstname) }}
+                    {{ form_widget(registrationForm.firstname) }}
+                    <div class="text-xs text-red-600 mt-1">{{ form_errors(registrationForm.firstname) }}</div>
+                </div>
+                <div>
+                    {{ form_label(registrationForm.lastname) }}
+                    {{ form_widget(registrationForm.lastname) }}
+                    <div class="text-xs text-red-600 mt-1">{{ form_errors(registrationForm.lastname) }}</div>
+                </div>
+            </div>
+
+            {# Email #}
+            <div>
+                {{ form_label(registrationForm.email) }}
+                {{ form_widget(registrationForm.email) }}
+                <div class="text-xs text-red-600 mt-1">{{ form_errors(registrationForm.email) }}</div>
+            </div>
+
+            {# Mot de passe #}
+            <div>
+                {{ form_label(registrationForm.plainPassword) }}
+                {{ form_widget(registrationForm.plainPassword) }}
+                <div class="text-xs text-red-600 mt-1">{{ form_errors(registrationForm.plainPassword) }}</div>
+            </div>
+
+            {# Case à cocher CGU #}
+            <div class="pt-1">
+                <div class="flex items-center gap-2.5">
+                    {{ form_widget(registrationForm.agreeTerms) }}
+                    {{ form_label(registrationForm.agreeTerms) }}
+                </div>
+                <div class="text-xs text-red-600 mt-1">{{ form_errors(registrationForm.agreeTerms) }}</div>
+            </div>
+
+            {# Bouton de validation #}
+            <div class="pt-3">
+                <button type="submit" class="w-full py-3 px-6 bg-sky-600 text-white font-semibold rounded-xl shadow-md hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 transition cursor-pointer">
+                    S'inscrire
+                </button>
+            </div>
+        {{ form_end(registrationForm) }}
+    </div>
+</div>
+{% endblock %}
+

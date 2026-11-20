@@ -1,4 +1,3 @@
-
 <?php
 
 namespace App\Dto;
@@ -22,8 +21,8 @@ final readonly class BookDetailDto
             title: $book->getTitle(),
             resume: $book->getResume(),
             author: $book->getAuthor(),
-            categories: $book->getCategories(),
-            userEmail: $book->getUser(),
+            // categories: $book->getCategories(),
+            // userEmail: $book->getUser(),
         );
     }
 }

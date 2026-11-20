@@ -60,5 +60,4 @@ class BookController extends AbstractController
             'book' => $this->bookService->getBookById($id)
         ]);
     }
-
 }

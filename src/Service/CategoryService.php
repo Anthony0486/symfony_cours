@@ -4,11 +4,13 @@ namespace App\Service;
 
 use App\Entity\Category;
 use App\Repository\CategoryRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
 class CategoryService
 {
     public function __construct(
-        private CategoryRepository $categoryRepository
+        private CategoryRepository $categoryRepository,
+        private EntityManagerInterface $entityManager
     ) {}
 
     public function getCategories(): array
@@ -20,4 +22,11 @@ class CategoryService
     {
         return $this->categoryRepository->find($id);
     }
+    public function saveCategory(Category $category): string
+    {
+        $this->entityManager->persist($category);
+        $this->entityManager->flush();
+        return "La catégorie à bien été ajoutée". $category->getName();
+    }
+
 }
