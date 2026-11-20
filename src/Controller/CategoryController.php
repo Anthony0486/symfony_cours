@@ -56,22 +56,30 @@ class CategoryController extends AbstractController
             return $this->redirectToRoute('app_categories_new');
         }
         return $this->render('category/category_new.html.twig', [
-            'form'=> $form
+            'form' => $form
         ]);
 
     }
     #[Route(path: '/category/{id}/edit', name: 'app_category_edit', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_ADMIN', message: 'Vous n\'êtes pas autorisé à accéder à cette page')]
-    public function edit(Request $request, Category $category): Response{
-        $form = $this->createForm(CategoryType::class, $category);
+    public function edit(Request $request, Category $category): Response
+    {
+
+        $form = $this->createForm(CategoryType::class, $category, ['is_edit' => true]);
+
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
+
             $msg = $this->categoryService->saveCategory($category);
+
             $this->addFlash('succes', $msg);
+
             return $this->redirectToRoute('app_categories');
-    }
-    return $this->render('category/category_edit.html.twig', [
-        'form'=> $form
+        }
+        return $this->render('category/category_new.html.twig', [
+            'form' => $form,
+            'is_edit' => true,
         ]);
     }
 }

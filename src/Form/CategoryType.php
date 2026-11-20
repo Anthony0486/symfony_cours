@@ -25,7 +25,7 @@ class CategoryType extends AbstractType
                 ],
             ])
             ->add('save', SubmitType::class, [
-                'label' => 'Enregistrer la catégorie',
+                'label' => $options['is_edit'] ? 'Modifier la catégorie' : 'Ajouter une nouvelle catégorie',
                 'attr' => [
                     'class' => 'w-full py-3 px-6 bg-sky-600 text-white font-semibold rounded-xl shadow-md hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 transition cursor-pointer',
                 ],
@@ -37,6 +37,7 @@ class CategoryType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Category::class,
+            'is_edit' => false,
         ]);
     }
 }

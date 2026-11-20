@@ -1,6 +1,6 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Ajouter une catégorie - Bibliothèque{% endblock %}
+{% block title %} {{ is_edit|default(false) ? 'Modifier la catégorie' : 'Nouvelle catégorie' }} - Bibliothèque{% endblock %}
 
 {% block body %}
 <div class="max-w-xl mx-auto px-4 py-10">
@@ -19,8 +19,8 @@
             <div class="w-16 h-16 mx-auto mb-4 bg-sky-50 rounded-full flex items-center justify-center">
                 <img class="w-9 h-9 object-contain" src="{{ asset('images/book.svg') }}" alt="Logo EasyBook">
             </div>
-            <h1 class="text-3xl font-bold text-slate-900 mb-2">Nouvelle catégorie</h1>
-            <p class="text-slate-500 text-sm">Ajoutez une catégorie pour classer les ouvrages de la bibliothèque</p>
+            <h1 class="text-3xl font-bold text-slate-900 mb-2"> {{ is_edit|default(false) ? 'Modifier la catégorie' : 'Nouvelle catégorie' }}</h1>
+            <p class="text-slate-500 text-sm"> {{ is_edit|default(false) ? 'Modifier la catégorie' : 'Nouvelle catégorie' }} pour classer les ouvrages de la bibliothèque</p>
         </div>
 
         {{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
