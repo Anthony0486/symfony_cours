@@ -1,0 +1,10 @@
+{# templates/components/toaster.html.twig #}
+{% for message in app.flashes('succes') %}
+    <twig:Alert :message="message" type="success" />
+{% endfor %}
+{% for message in app.flashes('success') %}
+    <twig:Alert :message="message" type="success" />
+{% endfor %}
+{% for message in app.flashes('notice') %}
+    <twig:Alert :message="message" type="info" />
+{% endfor %}

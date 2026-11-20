@@ -26,7 +26,7 @@ class CategoryService
     {
         $this->entityManager->persist($category);
         $this->entityManager->flush();
-        return "La catégorie à bien été ajoutée". $category->getName();
+        return "La catégorie à bien été ajoutée";
     }
 
 }

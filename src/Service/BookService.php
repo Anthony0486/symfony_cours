@@ -5,11 +5,13 @@ namespace App\Service;
 use App\Entity\Book;
 use App\Repository\BookRepository;
 use App\Dto\BookListDto;
+use Doctrine\ORM\EntityManagerInterface;
 
 class BookService
 {
     public function __construct(
-        private readonly BookRepository $bookRepository
+        private readonly BookRepository $bookRepository,
+        private EntityManagerInterface $entityManager
     ) {
     }
     public function getBooks(): array
@@ -45,5 +47,11 @@ class BookService
     public function getBooksByTitle(string $title): ?book
     {
         return $this->bookRepository->findByTitle($title);
+    }
+        public function saveBook(Book $book): string
+    {
+        $this->entityManager->persist($book);
+        $this->entityManager->flush();
+        return "Le livre à bien été ajoutée";
     }
 }

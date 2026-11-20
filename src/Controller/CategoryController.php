@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Category;
 use App\Service\CategoryService;
 use App\Form\CategoryType;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class CategoryController extends AbstractController
 {
@@ -18,6 +19,7 @@ class CategoryController extends AbstractController
     }
 
     #[Route(path: '/categories', name: 'app_categories')]
+    #[IsGranted('ROLE_USER', message: 'Vous n\'êtes pas autorisé à accéder à cette page')]
     public function showAllCategories(): Response
     {
         //Récupération de toutes les catégories de la BDD
@@ -36,21 +38,26 @@ class CategoryController extends AbstractController
         ]);
     }
     #[Route(path: '/categories/new', name: 'app_categories_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN', message: 'Vous n\'êtes pas autorisé à accéder à cette page')]
     public function new(Request $request): Response
     {
-        $category = new Category;
+        $category = new Category();
+
         $form = $this->createForm(CategoryType::class, $category);
+
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
-            $msg = $this->categoryService->saveCategory($category);
-            $this->addFlash('succes', $msg);
-            $this->redirectToRoute('app_categories_new');
+        if ($form->isSubmitted() && $form->isValid()) {
 
+            $msg = $this->categoryService->saveCategory($category);
+
+            $this->addFlash('succes', $msg);
+
+            return $this->redirectToRoute('app_categories_new');
+        }
         return $this->render('category/category_new.html.twig', [
-            'form'->$this->$form,
-            'msg'->$this->$msg ?? ""
+            'form'=> $form
         ]);
+
     }
-}
 }

@@ -9,7 +9,7 @@
         <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h14"/></svg>
     </button>
     <div class="hidden w-full md:block md:w-auto" id="navbar-default">
-      <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-slate-100 rounded-lg bg-slate-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white">
+      <ul class="font-medium flex flex-col md:items-center p-4 md:p-0 mt-4 border border-slate-100 rounded-lg bg-slate-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white">
         <li>
           <a href="{{ path('app_books') }}" class="block py-2 px-3 text-slate-700 rounded hover:bg-slate-100 md:hover:bg-transparent md:hover:text-sky-600 md:p-0" aria-current="page">Bibliothèque</a>
         </li>
@@ -18,6 +18,13 @@
         </li>
         <li>
           <a href="{{ path('app_register') }}" class="block py-2 px-3 text-slate-700 rounded hover:bg-slate-100 md:hover:bg-transparent md:border-0 md:hover:text-sky-600 md:p-0">S'enregistrer</a>
+        </li>
+        <li>
+          {% if app.user %}
+            <a href="{{ path('app_logout') }}" data-turbo="false" data-turbo-prefetch="false" class="inline-block px-4 py-2 bg-red-50 border border-red-200 text-red-700 text-sm font-semibold rounded-xl shadow-xs hover:bg-white transition">Se déconnecter</a>
+          {% else %}
+            <a href="{{ path('app_login') }}" class="inline-block px-4 py-2 bg-sky-600 text-white text-sm font-semibold rounded-xl shadow-xs hover:bg-sky-700 transition">Se connecter</a>
+          {% endif %}
         </li>
       </ul>
     </div>
