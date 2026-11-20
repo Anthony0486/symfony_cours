@@ -68,7 +68,7 @@ class BookController extends AbstractController
     }
 
     #[Route(path: '/books/new', name: 'app_book_new', methods: ['GET', 'POST'])]
-    // #[IsGranted('ROLE_ADMIN', message: 'Vous n\'êtes pas autorisé à accéder à cette page')]
+    #[IsGranted('ROLE_ADMIN', message: 'Vous n\'êtes pas autorisé à accéder à cette page')]
     public function new(Request $request): Response
     {
         $book = new Book();
@@ -83,7 +83,7 @@ class BookController extends AbstractController
 
             $this->addFlash('succes', $msg);
 
-            return $this->redirectToRoute('app_book_new');
+            return $this->redirectToRoute('app_books');
         }
         return $this->render('book/book_new.html.twig', [
             'form' => $form

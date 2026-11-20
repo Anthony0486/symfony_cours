@@ -11,7 +11,8 @@ class CategoryService
     public function __construct(
         private CategoryRepository $categoryRepository,
         private EntityManagerInterface $entityManager
-    ) {}
+    ) {
+    }
 
     public function getCategories(): array
     {
@@ -24,9 +25,12 @@ class CategoryService
     }
     public function saveCategory(Category $category): string
     {
+        $isNew = null === $category->getId();
         $this->entityManager->persist($category);
         $this->entityManager->flush();
-        return "La catégorie à bien été ajoutée";
+        return $isNew
+            ? 'La catégorie a bien été ajoutée.'
+            : 'La catégorie a bien été modifiée.';
     }
 
 }

@@ -1,13 +1,12 @@
 <nav class="bg-white sticky w-full z-20 top-0 start-0 border-b border-slate-200 shadow-xs">
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+    {# Logo à gauche #}
     <a href="{{ path('app_home') }}" class="flex items-center space-x-3 rtl:space-x-reverse">
         <img src="{{ asset('images/book.svg') }}" class="h-7" alt="EasyBook Logo" />
         <span class="self-center text-xl text-slate-900 font-semibold whitespace-nowrap">EasyBook</span>
     </a>
-    <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-slate-500 rounded-lg md:hidden hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-200" aria-controls="navbar-default" aria-expanded="false">
-        <span class="sr-only">Open main menu</span>
-        <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h14"/></svg>
-    </button>
+
+    {# Liens de navigation au centre #}
     <div class="hidden w-full md:block md:w-auto" id="navbar-default">
       <ul class="font-medium flex flex-col md:items-center p-4 md:p-0 mt-4 border border-slate-100 rounded-lg bg-slate-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white">
         <li>
@@ -16,17 +15,78 @@
         <li>
           <a href="{{ path('app_categories') }}" class="block py-2 px-3 text-slate-700 rounded hover:bg-slate-100 md:hover:bg-transparent md:border-0 md:hover:text-sky-600 md:p-0">Catégories</a>
         </li>
-        <li>
-          <a href="{{ path('app_register') }}" class="block py-2 px-3 text-slate-700 rounded hover:bg-slate-100 md:hover:bg-transparent md:border-0 md:hover:text-sky-600 md:p-0">S'enregistrer</a>
-        </li>
-        <li>
-          {% if app.user %}
-            <a href="{{ path('app_logout') }}" data-turbo="false" data-turbo-prefetch="false" class="inline-block px-4 py-2 bg-red-50 border border-red-200 text-red-700 text-sm font-semibold rounded-xl shadow-xs hover:bg-white transition">Se déconnecter</a>
-          {% else %}
-            <a href="{{ path('app_login') }}" class="inline-block px-4 py-2 bg-sky-600 text-white text-sm font-semibold rounded-xl shadow-xs hover:bg-sky-700 transition">Se connecter</a>
-          {% endif %}
-        </li>
       </ul>
+    </div>
+
+    {# Espace compte utilisateur bien séparé à droite #}
+    <div class="flex items-center gap-3">
+      {% if app.user %}
+        {% set initials = ((app.user.firstname|default('')|first) ~ (app.user.lastname|default('')|first))|upper %}
+        {% if initials is empty %}
+          {% set initials = app.user.userIdentifier|first|upper %}
+        {% endif %}
+
+        <details id="user-menu-dropdown" class="relative" style="position: relative;">
+          <summary
+            class="w-12 h-12 rounded-full bg-sky-100 border border-sky-200 text-sky-700 font-bold text-lg flex items-center justify-center cursor-pointer select-none shadow-xs hover:bg-sky-50 transition"
+            style="list-style: none; cursor: pointer;"
+            title="Mon compte ({{ app.user.userIdentifier }})"
+          >
+            {{ initials }}
+          </summary>
+
+          <div
+            class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden"
+            style="position: absolute; right: 0; top: 100%; margin-top: 0.5rem; width: 14rem; z-index: 50;"
+          >
+            {# Infos de l'utilisateur connecté #}
+            <div class="px-4 py-3 bg-slate-50 border-b border-slate-100">
+              {% if app.user.firstname or app.user.lastname %}
+                <p class="text-sm font-bold text-slate-900 truncate">
+                  {{ app.user.firstname }} {{ app.user.lastname }}
+                </p>
+              {% endif %}
+              <p class="text-xs text-slate-500 truncate">
+                {{ app.user.userIdentifier }}
+              </p>
+            </div>
+
+            {# Liens du menu déroulant #}
+            <div class="p-2 flex flex-col gap-1">
+              <a
+                href="{{ path('app_user_id', {id: app.user.id}) }}"
+                class="block px-3 py-2 text-sm font-semibold text-slate-700 rounded-xl hover:bg-slate-100 hover:text-sky-600 transition"
+              >
+                Mon compte
+              </a>
+              <a
+                href="{{ path('app_logout') }}"
+                data-turbo="false"
+                data-turbo-prefetch="false"
+                class="block px-3 py-2 text-sm font-semibold text-red-700 bg-red-50 rounded-xl hover:bg-white transition"
+              >
+                Se déconnecter
+              </a>
+            </div>
+          </div>
+        </details>
+
+        <script>
+          document.addEventListener('click', function (event) {
+            const dropdown = document.getElementById('user-menu-dropdown');
+            if (dropdown && dropdown.hasAttribute('open') && !dropdown.contains(event.target)) {
+              dropdown.removeAttribute('open');
+            }
+          });
+        </script>
+      {% else %}
+        <a href="{{ path('app_register') }}" class="inline-block px-4 py-2 bg-sky-100 border border-sky-200 text-sky-800 text-sm font-semibold rounded-xl shadow-xs hover:bg-white transition">
+          S'enregistrer
+        </a>
+        <a href="{{ path('app_login') }}" class="inline-block px-4 py-2 bg-sky-600 text-white text-sm font-semibold rounded-xl shadow-xs hover:bg-sky-700 transition">
+          Se connecter
+        </a>
+      {% endif %}
     </div>
   </div>
 </nav>

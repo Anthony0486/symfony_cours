@@ -22,6 +22,7 @@
         <twig:Navbar/>
 
         <main class="flex-1">
+            {% include "components/toaster.html.twig" %}
             {% block body %}{% endblock %}
         </main>
 

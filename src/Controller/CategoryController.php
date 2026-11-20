@@ -60,4 +60,18 @@ class CategoryController extends AbstractController
         ]);
 
     }
+    #[Route(path: '/category/{id}/edit', name: 'app_category_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN', message: 'Vous n\'êtes pas autorisé à accéder à cette page')]
+    public function edit(Request $request, Category $category): Response{
+        $form = $this->createForm(CategoryType::class, $category);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $msg = $this->categoryService->saveCategory($category);
+            $this->addFlash('succes', $msg);
+            return $this->redirectToRoute('app_categories');
+    }
+    return $this->render('category/category_edit.html.twig', [
+        'form'=> $form
+        ]);
+    }
 }

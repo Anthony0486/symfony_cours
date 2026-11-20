@@ -24,9 +24,14 @@
                 </span>
             </div>
 
-            <h1 class="text-3xl font-bold text-slate-900 capitalize mb-6">
-                {{ category.name }}
-            </h1>
+            <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+                <h1 class="text-3xl font-bold text-slate-900 capitalize">
+                    {{ category.name }}
+                </h1>
+                <a href="{{ path('app_category_edit', {id: category.id}) }}" class="inline-flex items-center gap-2 px-4 py-2 bg-sky-600 text-white text-sm font-semibold rounded-xl shadow-xs hover:bg-sky-700 transition">
+                    Modifier la catégorie
+                </a>
+            </div>
 
             <div class="pt-6 border-t border-slate-200 grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                 <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
